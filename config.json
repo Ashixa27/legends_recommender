@@ -1,0 +1,16 @@
+{
+  "versions_url": "https://ddragon.leagueoflegends.com/api/versions.json",
+  "champion_url": "https://ddragon.leagueoflegends.com/cdn/{version}/data/en_US/champion/{name}.json",
+  "items_url": "https://ddragon.leagueoflegends.com/cdn/{version}/data/en_US/item.json",
+  "runes_url": "https://ddragon.leagueoflegends.com/cdn/{version}/data/en_US/runesReforged.json",
+  "spells_url": "https://ddragon.leagueoflegends.com/cdn/{version}/data/en_US/summoner.json",
+  "database": {
+    "database_config": {
+      "host": "localhost",
+      "user": "postgres",
+      "database": "postgres",
+      "port": "5432"
+    },
+    "schema": "leagueoflegends_recommender"
+  }
+}

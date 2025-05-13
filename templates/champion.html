@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ champion.name }} Build - League of Legends</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/champion.css') }}">
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+</head>
+<body>
+    <nav>
+        <div>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('champions') }}">Champions</a>
+            <a href="{{ url_for('login') }}">Profile</a>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search_input" placeholder="Search champion...">
+            <ul id="suggestions" class="suggestions-box"></ul>
+        </div>
+    </nav>
+    {% if error %}
+    <div class="flash-error">
+        {{ error }}
+    </div>
+    {% endif %}
+    <div class="container" id="champion_container">
+        <div class="champion-info">
+            <img class="champion-img" src="https://ddragon.leagueoflegends.com/cdn/{{ version }}/img/champion/{{ champion.name }}.png" alt="{{ champion.name }}">
+            <div class="info">
+                <h1>{{ champion.name }}</h1>
+                <p class="title">{{ champion.title }}</p>
+                <p><strong>Difficulty:</strong> {{ champion.data.info.difficulty }}</p>
+                <p><strong>Roles:</strong> {{ champion.tags | join(', ') }}</p>
+            </div>
+            <form method="POST" action="{{ url_for('save_build') }}">
+                <input type="hidden" name="champion_name" value="{{ champion.name }}">
+                <button type="submit" id="save-build-button">Save Build</button>
+            </form>
+        </div>
+
+        <div class="build" id="build1">
+            <div class="skill-priority">
+                <h2>Skill Priority</h2>
+                    <p>
+                        <strong>
+                            {% for skill in skill_priority %}
+                                {{ skill }}
+                            {% endfor %}
+                        </strong>
+                    </p>
+                </div>
+            <div class="runes">
+                <div class="rune-section">
+                    <div class="rune-tree">
+                        <h2>Primary Tree</h2>
+                        {% for tree_name, tree_icon in runes_primary_tree.items() %}
+                        <h4>{{ tree_name }}</h4>
+                        <img src="https://ddragon.leagueoflegends.com/cdn/img/{{ tree_icon }}" alt="{{ tree_name }}">
+                        {% for rune in runes_primary_runes %}
+                        <div class="tooltip-container" id="p_runes_tooltip-container">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/img/{{ rune.icon }}" alt="{{ rune.name }}">
+                            <div class="tooltip">{{ rune.name }}<br><br>{{ rune.description | safe }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <div class="rune-tree">
+                        <h2>Secondary Tree</h2>
+                        {% for tree_name, tree_icon in runes_secondary_tree.items() %}
+                        <h4>{{ tree_name }}</h4>
+                        <img src="https://ddragon.leagueoflegends.com/cdn/img/{{ tree_icon }}" alt="{{ tree_name }}">
+                        {% for rune in runes_secondary_runes %}
+                        <div class="tooltip-container" id="s_runes_tooltip-container">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/img/{{ rune.icon }}" alt="{{ rune.name }}">
+                            <div class="tooltip">{{ rune.name }}<br><br>{{ rune.description | safe }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <div class="rune-tree" id="stat-shards">
+                        <h2>Stat Shards</h2>
+                        {% for shard in stat_shards.split(', ') %}
+                        <p> + {{ shard }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="build" id="build2">
+            <div class="spells">
+                <h2>Summoner Spells</h2>
+                <div class="spell-row">
+                    {% for spell in spell_1 %}
+                        <div class="tooltip-container">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/{{ version }}/img/spell/{{ spell.id }}.png" alt="{{ spell.name }}">
+                            <div class="tooltip">{{ spell.name }}<br><br>{{ spell.description }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="spell-row">
+                {% for spell in spell_2 %}
+                    <div class="tooltip-container">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/{{ version }}/img/spell/{{ spell.id }}.png" alt="{{ spell.name }}">
+                        <div class="tooltip">{{ spell.name }}<br><br>{{ spell.description }}</div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+
+            <div class="items" id="items">
+                <div class="item-row">
+                    <h2>Starting Items</h2>
+                    {% for item in starting_items %}
+                    <div class="build_item">
+                        <div class="tooltip-container">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/{{ version }}/img/item/{{ item.id }}.png" alt="{{ item.name }}">
+                            <div class="tooltip">{{ item.name }}<br><br>{{ item.description | safe }}<br><br>{{ item.gold }} gold</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="item-row">
+                    <h2>Core Items</h2>
+                    {% for item in core_items %}
+                    <div class="build_item">
+                        <div class="tooltip-container">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/{{ version }}/img/item/{{ item.id }}.png" alt="{{ item.name }}">
+                            <div class="tooltip">{{ item.name }}<br><br>{{ item.description | safe }}<br><br>{{ item.gold }} gold</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="item-row">
+                    <h2>Situational Items</h2>
+                    {% for item in situational_items %}
+                    <div class="build_item">
+                        <div class="tooltip-container">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/{{ version }}/img/item/{{ item.id }}.png" alt="{{ item.name }}">
+                            <div class="tooltip">{{ item.name }}<br><br>{{ item.description | safe }}<br><br>{{ item.gold }} gold</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

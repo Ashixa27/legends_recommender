@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>League of Legends Builds</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+</head>
+<body>
+    <nav>
+        <div>
+            <a href="{{ url_for('champions') }}">Champions</a>
+            <a href="{{ url_for('home') }}">Home</a>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search_input" placeholder="Search champion...">
+            <ul id="suggestions" class="suggestions-box"></ul>
+        </div>
+    </nav>
+    {% if error %}
+    <div class="flash-error">
+        {{ error }}
+    </div>
+    {% endif %}
+    <div class="flex-container">
+        <div>
+            <button id="logout-button" onclick="location.href='{{ url_for('logout') }}'">Logout</button>
+        </div>
+        <div>
+            <button id="update-button" onclick="location.href='{{ url_for('update_passw') }}'">Change password</button>
+        </div>
+        <form action="{{ url_for('delete_acc') }}" method="POST" style="display:inline;">
+            <button type="submit" id="delete-button" onclick="return confirm('Are you sure you want to delete your account?');">
+                Delete account
+            </button>
+        </form>
+    </div>
+</body>
+</html>

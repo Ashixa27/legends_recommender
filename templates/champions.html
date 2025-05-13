@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>League of Legends Builds</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/fetch_data.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+</head>
+<body>
+    <nav>
+        <div>
+            <a href="{{ url_for('login') }}">Profile</a>
+            <a href="{{ url_for('home') }}">Home</a>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search_input" placeholder="Search champion...">
+            <ul id="suggestions" class="suggestions-box"></ul>
+        </div>
+    </nav>
+    {% if error %}
+    <div class="flash-error">
+        {{ error }}
+    </div>
+    {% endif %}
+    <div class="flex-container" id="champion_list">
+    </div>
+</body>
+</html>

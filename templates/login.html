@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+    <title>Login Page</title>
+</head>
+<body>
+    <nav>
+        <div>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('champions') }}">Champions</a>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search_input" placeholder="Search champion...">
+            <ul id="suggestions" class="suggestions-box"></ul>
+        </div>
+    </nav>
+    {% if error %}
+    <div class="flash-error">
+        {{ error }}
+    </div>
+    {% endif %}
+    <div class="container">
+        <h1>Login</h1>
+        <form id="loginForm" action="/login" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+
+            <button type="submit" id="loginButton">Login</button>
+        </form>
+        <br>
+        <button class="create-acc-button" onclick="location.href='{{ url_for('create_account') }}'">Create new account</button>
+    </div>
+</body>
+</html>

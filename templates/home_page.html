@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>League of Legends Builds</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+</head>
+<body>
+    <nav>
+        <div>
+            <a href="{{ url_for('login') }}">Profile</a>
+            <a href="{{ url_for('champions') }}">Champions</a>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search_input" placeholder="Search champion...">
+            <ul id="suggestions" class="suggestions-box"></ul>
+        </div>
+    </nav>
+    {% if error %}
+    <div class="flash-error">
+        {{ error }}
+    </div>
+    {% endif %}
+    <div class="flex-container" id="description">
+        <h1>What is League Of Legends?</h1>
+        <p>League of Legends is a free-to-play multiplayer online battle arena (MOBA) game developed by Riot Games.
+            It features two teams of five players, each selecting unique champions with distinct abilities.
+            Players compete on a map called Summoner’s Rift, aiming to destroy the opposing team's Nexus.
+            The game requires strategic coordination, individual skill, and teamwork.
+            With a global player base and a prominent esports scene, it remains one of the most popular competitive games worldwide.
+        </p>
+    </div>
+    <div class="flex-container" id="champion_flexbox">
+        <a href="/champion/Ambessa" class="flex-item">
+            <div class="flex-icon">
+                <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ambessa_0.jpg" style="width:100%">
+            </div>
+            <div class="champion-label">Ambessa</div>
+            <div class="champion-description">Matriarch of War</div>
+            <div class="difficulty-bar hard"></div>
+        </a>
+        <a href="/champion/AurelionSol" class="flex-item">
+            <div class="flex-icon">
+                <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/AurelionSol_0.jpg" style="width:100%">
+            </div>
+            <div class="champion-label">Aurelion Sol</div>
+            <div class="champion-description">The Star Forger</div>
+            <div class="difficulty-bar medium"></div>
+        </a>
+        <a href="/champion/Mel" class="flex-item">
+            <div class="flex-icon">
+                <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mel_0.jpg" style="width:100%">
+            </div>
+            <div class="champion-label">Mel</div>
+            <div class="champion-description">The Soul's Reflection</div>
+            <div class="difficulty-bar medium"></div>
+        </a>
+        <a href="/champion/Briar" class="flex-item">
+            <div class="flex-icon">
+                <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Briar_0.jpg" style="width:100%">
+            </div>
+            <div class="champion-label">Briar</div>
+            <div class="champion-description">the Restrained Hunger</div>
+            <div class="difficulty-bar easy"></div>
+        </a>
+        <div class="explore-button-container">
+            <button class="explore-button" onclick="location.href='{{ url_for('champions') }}'">Explore All Champions →</button>
+        </div>
+    </div>
+</body>
+</html>

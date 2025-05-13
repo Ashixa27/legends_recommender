@@ -1,0 +1,192 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('/static/images/login_wallpaper.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+    padding-top: 80px;
+}
+
+/* Navigation Bar */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center; /* Center the nav items */
+    align-items: center;
+    padding: 15px 30px;
+    z-index: 100;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+}
+
+nav a {
+    color: #00bcd4;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ff0080;
+}
+
+/* Search Bar */
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 2px solid #00bcd4;
+    border-radius: 50px;
+    padding: 5px 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+#search_input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 10px;
+    width: 180px;
+    font-size: 16px;
+}
+
+/* Suggestions Dropdown */
+.suggestions-box {
+    list-style: none;
+    position: absolute;
+    top: 105%;
+    align: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 180px;
+    z-index: 1000;
+}
+
+.suggestions-box::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track background */
+.suggestions-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Scrollbar handle */
+.suggestions-box::-webkit-scrollbar-thumb {
+  background: #ff0080;
+  border-radius: 15px;
+}
+
+.suggestions-box li {
+    padding: 10px 15px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.suggestions-box li:hover {
+    background-color: rgba(255, 0, 128, 0.3);
+}
+
+.container {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0px 0px 20px rgba(255, 0, 128, 0.5);
+}
+
+h1 {
+    font-size: 32px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 18px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+#email, #username, #old-password, #password {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #00bcd4;
+    border-radius: 10px;
+    background-color: #2a2a3b;
+    color: white;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+#email:focus, #username:focus, #old-password:focus, #password:focus {
+    border-color: #ff0080;
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 0, 128, 0.6);
+}
+
+#changeButton,
+#loginButton,
+#createButton {
+    width: 100%;
+    padding: 15px;
+    background-color: #ff0080;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#changeButton:hover,
+#loginButton:hover,
+#createButton:hover {
+    background-color: #9c27b0;
+}
+
+
+.create-acc-button,
+.return-button {
+    background: transparent;
+    border: none;
+    color: #00bcd4;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.create-acc-button:hover,
+.return-button:hover {
+    color: #ff0080;
+}
+
+.flash-error {
+  color: #fff;
+  background-color: #e74c3c;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
