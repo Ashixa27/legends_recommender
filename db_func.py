@@ -164,6 +164,19 @@ class DBManager:
             return False, f"Unsuccessful query execution: {e}"
 
 
+    def get_saved_builds(self, username = str):
+        try:
+            with self.get_cursor() as cursor:
+                    query = f"select champions from {self.schema}.user_builds where user_id = (SELECT id FROM {self.schema}.users WHERE username = %s)"
+                    cursor.execute(query, (username, ))
+                    result = cursor.fetchone()
+                    return result
+
+        except Exception as e:
+            print(f"Failed to get saved builds: {e}")
+            return False, f"Unsuccessful query execution: {e}"
+
+
     def search_champions(self, search: str):
         """
         Search for champions in the database that match the given search query

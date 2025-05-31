@@ -108,6 +108,28 @@ nav a:hover {
     background-color: rgba(255, 0, 128, 0.3);
 }
 
+.flash {
+  position: fixed;
+  top: 5em;
+  padding: 1em;
+  margin: 1em 0;
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+}
+
+.flash.error {
+  background-color: #ffe0e0;
+  color: #d10000;
+  border: 1px solid #d10000;
+}
+
+.flash.success {
+  background-color: #e0ffe0;
+  color: #007f00;
+  border: 1px solid #007f00;
+}
+
 .container {
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
@@ -180,13 +202,4 @@ label {
 .create-acc-button:hover,
 .return-button:hover {
     color: #ff0080;
-}
-
-.flash-error {
-  color: #fff;
-  background-color: #e74c3c;
-  padding: 10px 15px;
-  border-radius: 5px;
-  margin-bottom: 1em;
-  font-weight: bold;
 }

@@ -1,5 +1,7 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from os.path import split
+
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from champion import Champion
 from build_recommender import BuildRecommender
@@ -16,7 +18,8 @@ def home():
 
 @app.route('/profile')
 def profile():
-    return render_template('user_page.html')
+    saved_builds = db_manager.get_saved_builds(session['user'])[0].split()
+    return render_template('user_page.html', saved_builds=saved_builds)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -29,7 +32,8 @@ def login():
         if stored_hash and check_password_hash(stored_hash, password):
             session['user'] = user
             return redirect(url_for('home'))
-        return render_template('login.html', error="Invalid username or password.")
+        flash("Invalid username or password.", "error")
+        return render_template('login.html')
 
     if 'user' in session:
         return redirect(url_for('profile'))
@@ -47,6 +51,7 @@ def delete_acc():
     if 'user' in session:
         db_manager.delete_user(session['user'])
         session.clear()
+    flash("Account deleted successfully.", "success")
     return redirect(url_for('home'))
 
 
@@ -65,8 +70,10 @@ def update_passw():
             hashed = generate_password_hash(new_passw)
             response = db_manager.update_pass(session['user'], hashed)
             if response:
+                flash("Password was changed successfully.", "success")
                 return redirect(url_for("profile"))
-            return render_template('user_page.html', error="Failed to update password.")
+            flash("Failed to update password.", "error")
+            return redirect(url_for("profile"))
 
     return render_template('change_pass.html')
 
@@ -80,23 +87,33 @@ def create_account():
             password = request.form.get('password')
 
             if not email or not user or not password:
-                return render_template('create_account.html', error="All fields are required.")
+                flash("All fields are required.", "error")
+                return render_template('create_account.html')
+
+            if len(password) < 8:
+                flash("Minimum 8 character password is required.", "error")
+                return render_template('create_account.html')
 
             if db_manager.user_exists(user):
-                return render_template('create_account.html', error="Username already taken.")
+                flash("Username already taken.", "error")
+                return render_template('create_account.html')
             if db_manager.email_exists(email):
-                return render_template('create_account.html', error="Email already registered.")
+                flash("Email already registered.", "error")
+                return render_template('create_account.html')
 
             hashed = generate_password_hash(password)
             response = db_manager.add_user(user, email, hashed)
             if response:
+                flash("Account created successfully", "success")
                 return redirect(url_for("login"))
 
-            return render_template('create_account.html', error="Something went wrong. Try again.")
+            flash("Something went wrong. Try again.", "error")
+            return render_template('create_account.html')
 
         except Exception as e:
             print(f"Error: {e}")
-            return render_template('create_account.html', error=f"Something went wrong. Try again.")
+            flash("Something went wrong. Try again.")
+            return render_template('create_account.html')
 
     return render_template('create_account.html')
 
@@ -122,7 +139,8 @@ def champion_page(name):
     try:
         champ = Champion(name)
         if champ is None:
-            return render_template('champions.html', error=f"Champion data not found for {name}")
+            flash(f"Champion data not found for {name}", "error")
+            return redirect(url_for('champions'))
 
         recommender = BuildRecommender(champ)
         start, core, situational = recommender.recommend_items()
@@ -136,7 +154,8 @@ def champion_page(name):
 
     except Exception as e:
         print(f"Error loading champion data for {name}: {e}")
-        return render_template('champions.html', error=f"Error loading champion data for {name}")
+        flash(f"Error loading champion data for {name}", "error")
+        return render_template('champions.html')
 
 
 @app.route('/save', methods=['POST'])
@@ -148,12 +167,15 @@ def save_build():
         champ_name = request.form['champion_name']
         response = db_manager.save_champ_build(champ_name, session['user'])
         if response:
+            flash("Build saved successfully.", "success")
             return redirect(url_for('profile'))
-        return redirect(url_for('champion_page', error="Failed to save build"))
+        flash("Failed to save build", "error")
+        return redirect(url_for('champion_page'))
 
     except Exception as e:
         print(f"Error saving build: {e}")
-        return redirect(url_for('build_page', error="Unexpected error occurred"))
+        flash("Unexpected error occurred. Try again", "error")
+        return redirect(url_for('champion_page'))
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)

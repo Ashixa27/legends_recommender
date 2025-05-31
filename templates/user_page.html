@@ -18,11 +18,11 @@
             <ul id="suggestions" class="suggestions-box"></ul>
         </div>
     </nav>
-    {% if error %}
-    <div class="flash-error">
-        {{ error }}
-    </div>
-    {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
     <div class="flex-container">
         <div>
             <button id="logout-button" onclick="location.href='{{ url_for('logout') }}'">Logout</button>
@@ -35,6 +35,16 @@
                 Delete account
             </button>
         </form>
+        <div class="flex-container" id="champion_flexbox">
+            {% for champion in saved_builds%}
+             <a href="/champion/{{champion}}" class="flex-item">
+                <div class="flex-icon">
+                    <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{{champion}}_0.jpg" alt="{{champion}}">
+                </div>
+                <div class="champion-label">{{champion}}</div>
+            </a>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>

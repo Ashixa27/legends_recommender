@@ -18,11 +18,11 @@
             <ul id="suggestions" class="suggestions-box"></ul>
         </div>
     </nav>
-    {% if error %}
-    <div class="flash-error">
-        {{ error }}
-    </div>
-    {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
     <div class="flex-container" id="description">
         <h1>What is League Of Legends?</h1>
         <p>League of Legends is a free-to-play multiplayer online battle arena (MOBA) game developed by Riot Games.

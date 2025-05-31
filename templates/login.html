@@ -18,11 +18,11 @@
             <ul id="suggestions" class="suggestions-box"></ul>
         </div>
     </nav>
-    {% if error %}
-    <div class="flash-error">
-        {{ error }}
-    </div>
-    {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
     <div class="container">
         <h1>Login</h1>
         <form id="loginForm" action="/login" method="POST">
