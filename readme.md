@@ -47,15 +47,3 @@ A Flask web application that recommends builds for champions in League of Legend
 1. Select a champion.
 2. View recommended builds and item sets for that champion.
 3. Use suggestions to improve your in-game performance!
-
-## Contributing
-
-Contributions are welcome! Please open issues or submit pull requests for bug fixes, features, or improvements.
-
-## License
-
-This project is licensed under the MIT License.
-
----
-
-**Maintainer:** [Ashixa27](https://github.com/Ashixa27)
