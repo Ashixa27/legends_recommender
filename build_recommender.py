@@ -31,13 +31,8 @@ class BuildRecommender:
 
 
     @staticmethod
-    def add_to_build(elem: Item or Spell or Rune, build_place: list) -> None:
-        """
-        Adds an element (item, spell, or rune) to a given build list if it doesn't already exist in that list
-
-        :param elem: element to be added to the build
-        :param build_place: list to which the element will be added
-        """
+    def add_to_build(elem, build_place: list) -> None:
+        """ Adds an element (item, spell, or rune) to a given build list if it doesn't already exist in that list"""
         if elem.name not in [i.name for i in build_place]:
             build_place.append(elem)
 
@@ -49,7 +44,8 @@ class BuildRecommender:
         :return: tuple containing lists of starting items, core items and situational items for the champion
         """
         for item in self.items:
-            for k, v in self.build.items():
+            for k in ['starting_items', 'core_items', 'situational_items']:
+                v = self.build.get(k, [])
                 if item.name in v:
                     self.add_to_build(item, getattr(self, k))
 
